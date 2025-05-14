@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naughty Neighbors</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,700&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        /* --- Global Styles & Variables --- */
+        :root {
+            --matte-black: #000000;
+            --crisp-white: #FFFFFF;
+            --hot-pink: #FF007F; /* FF69B4 is an alternative */
+            --dusty-rose: #DAA5B7;
+            --nude-blush: #F4C6C3;
+            --gunmetal-gray: #2A2A2A;
+            --muted-indigo: #3D3B8E; /* Optional, not heavily used in this iteration */
+
+            --font-headline: 'Playfair Display', serif; /* For retro pinup flair & main titles */
+            --font-sub-headline: 'Montserrat', sans-serif; /* Bold sans-serif for section titles */
+            --font-body: 'Open Sans', sans-serif; /* Clean and readable */
+            --font-accent-alt: 'Special Elite', cursive; /* For diary/secret feel */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--gunmetal-gray); /* Darker base */
+            color: var(--crisp-white);
+            line-height: 1.7;
+            font-size: 18px;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-headline);
+            color: var(--crisp-white); /* White on dark backgrounds */
+            margin-bottom: 1rem;
+        }
+
+        h1 { font-size: 3.5rem; font-family: var(--font-headline); text-align: center; margin-bottom: 0.5rem; color: var(--hot-pink);}
+        h2 { /* Section Titles */
+            font-size: 2.8rem;
+            margin-top: 2rem;
+            font-family: var(--font-sub-headline);
+            font-weight: 700;
+            color: var(--nude-blush); /* Soft contrast for section titles */
+            border-bottom: 2px solid var(--hot-pink);
+            padding-bottom: 0.5rem;
+            text-align: center;
+        }
+        h3 { /* Sub-section titles, card titles */
+            font-size: 1.8rem;
+            font-family: var(--font-sub-headline);
+            font-weight: 700;
+            color: var(--dusty-rose);
+        }
+        h4 { /* Smaller headings, item titles */
+            font-size: 1.4rem;
+            font-family: var(--font-sub-headline);
+            font-weight: 700;
+            color: var(--crisp-white);
+        }
+
+        p {
+            margin-bottom: 1rem;
+            font-family: var(--font-body);
+            color: var(--nude-blush); /* Softer text color for body */
+        }
+
+        a {
+            color: var(--hot-pink);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--dusty-rose);
+            text-decoration: underline;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: var(--hot-pink);
+            color: var(--crisp-white);
+            font-family: var(--font-sub-headline);
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            border: 2px solid var(--hot-pink);
+            box-shadow: 0 2px 8px rgba(255, 0, 127, 0.3); /* Hot pink glow */
+        }
+
+        .button:hover {
+            background-color: var(--dusty-rose);
+            color: var(--matte-black);
+            border-color: var(--dusty-rose);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(218, 165, 183, 0.4); /* Dusty rose glow */
+            text-decoration: none;
+        }
+
+        /* --- Header & Tagline --- */
+        header {
+            background-color: var(--matte-black); /* Matte black header */
+            padding: 30px 0;
+            text-align: center;
+            border-bottom: 3px solid var(--hot-pink);
+            position: relative;
+        }
+
+        .tagline {
+            font-family: var(--font-accent-alt); /* Typewriter for intimate feel */
+            font-size: 1.4rem;
+            color: var(--nude-blush);
+            margin-top: 0.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- Section Styling --- */
+        .section {
+            padding: 50px 0;
+            margin-bottom: 0; /* Remove margin for seamless sections if desired */
+            background-color: var(--gunmetal-gray); /* Default section background */
+            border-top: 1px solid rgba(255,255,255,0.1); /* Subtle separator */
+            position: relative;
+        }
+        .section:nth-child(even) { /* Alternate section background for depth */
+             background-color: var(--matte-black);
+        }
+
+
+        .section-title { /* Already styled as h2 */ }
+
+        .section-subtitle {
+            font-family: var(--font-body);
+            font-style: italic;
+            font-size: 1.3rem;
+            text-align: center;
+            color: var(--dusty-rose);
+            margin-bottom: 2.5rem;
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('placeholder-hero-dark.jpg'); /* Placeholder for dark theme */
+            background-size: cover;
+            background-position: center;
+            color: var(--crisp-white);
+            padding: 60px 20px; /* Adjusted padding */
+            text-align: center;
+            min-height: 500px; /* Adjusted min-height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.7);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-header-image-placeholder {
+            width: 100%;
+            max-width: 800px; /* Or your desired max width */
+            height: 200px; /* Adjust as needed */
+            background-color: rgba(255,255,255,0.1); /* Placeholder color */
+            margin: 0 auto 30px auto; /* Centered, with bottom margin */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: var(--font-sub-headline);
+            color: var(--nude-blush);
+            border: 2px dashed var(--dusty-rose);
+        }
+        .hero::before { /* Subtle vignette/focus */
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.5) 100%);
+            pointer-events: none;
+        }
+        .hero h2 { /* Featured Neighbor title */
+            font-size: 2.8rem; /* Slightly smaller to accommodate image */
+            font-family: var(--font-headline);
+            color: var(--crisp-white);
+            text-shadow: 2px 2px 6px var(--matte-black);
+            border-bottom: none; /* Remove default h2 border here */
+            margin-bottom: 1rem;
+        }
+        .hero p.hero-intro-text { /* Specific class for this paragraph */
+            font-size: 1.5rem;
+            font-family: var(--font-body);
+            max-width: 650px;
+            margin: 0 auto 2.5rem auto; /* Centered */
+            text-shadow: 1px 1px 3px var(--matte-black);
+            color: var(--nude-blush);
+            text-align: center; /* Explicitly center this text */
+        }
+        .hero .button {
+            background-color: var(--hot-pink);
+            color: var(--crisp-white);
+            border-color: var(--hot-pink);
+        }
+        .hero .button:hover {
+            background-color: var(--crisp-white);
+            color: var(--hot-pink);
+            border-color: var(--crisp-white);
+        }
+
+        /* --- Zine Section (Digital Polaroid Wall) --- */
+        .zine-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px; /* More spacing for editorial feel */
+        }
+        .zine-item {
+            background-color: var(--matte-black); /* Darker cards */
+            border: 1px solid var(--gunmetal-gray); /* Subtle border */
+            padding: 0; /* Padding will be inside content areas */
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden; /* Clip content for polaroid style */
+        }
+        .zine-item:hover {
+            transform: translateY(-8px) rotate(0.5deg) scale(1.02);
+            box-shadow: 8px 8px 25px rgba(0,0,0,0.5);
+        }
+
+        .story-card .image-placeholder { /* This is the "photo" part of the polaroid */
+            width: 100%;
+            height: 200px;
+            background-color: var(--dusty-rose); /* Placeholder color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: var(--font-sub-headline);
+            color: var(--matte-black);
+            font-weight: 700;
+        }
+        .story-card-content {
+            padding: 20px;
+            background-color: var(--crisp-white); /* White "polaroid" bottom */
+            color: var(--matte-black);
+        }
+        .story-card-content h4 { /* Title on the polaroid */
+            font-family: var(--font-sub-headline);
+            color: var(--matte-black);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+        .story-card-content p { /* Excerpt on the polaroid */
+            font-size: 0.95rem;
+            font-family: var(--font-accent-alt); /* Typewriter for caption */
+            color: var(--gunmetal-gray);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        .story-card-content .button {
+            font-size: 0.9rem;
+            padding: 8px 15px;
+        }
+
+        .image-spotlight .polaroid { /* Standalone Polaroid */
+            background-color: var(--crisp-white);
+            border: 1px solid var(--nude-blush); /* Subtle border around white */
+            padding: 15px 15px 70px 15px; /* Polaroid proportions */
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+            transform: rotate(-2deg);
+            width: 100%;
+            min-height: 300px; /* Ensure space for image + caption */
+        }
+        .image-spotlight .polaroid-image-area {
+            background-color: var(--nude-blush); /* Placeholder for image */
+            height: 220px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: var(--font-sub-headline);
+            color: var(--matte-black);
+            margin-bottom: 10px;
+        }
+        .image-spotlight .polaroid-caption {
+            font-family: var(--font-accent-alt);
+            color: var(--gunmetal-gray);
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+
+        .audio-clip {
+            background-color: var(--matte-black);
+            color: var(--crisp-white);
+            padding: 25px;
+            border: 1px solid var(--hot-pink);
+            text-align: center;
+        }
+        .audio-clip h4 { color: var(--hot-pink); font-family: var(--font-sub-headline); }
+        .audio-clip p { font-family: var(--font-accent-alt); font-size: 1.8rem; color: var(--nude-blush); }
+
+
+        /* --- Navigation Section (Take A Peek) --- */
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .category-item {
+            background: var(--matte-black);
+            padding: 25px;
+            border-radius: 0px; /* Sharper edges for editorial */
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            border-left: 4px solid var(--hot-pink);
+        }
+        .category-item:hover {
+            transform: scale(1.03);
+            background-color: var(--gunmetal-gray);
+        }
+        .category-item h4 a {
+            font-family: var(--font-sub-headline);
+            color: var(--hot-pink);
+            font-size: 1.6rem;
+        }
+        .category-item h4 a:hover {
+            color: var(--dusty-rose);
+        }
+        .category-item p {
+            font-size: 1rem;
+            font-family: var(--font-body);
+            color: var(--nude-blush);
+        }
+
+        /* --- Form Styling --- */
+        .form-container {
+            max-width: 650px;
+            margin: 0 auto;
+            background: var(--matte-black);
+            padding: 35px;
+            border-radius: 0px; /* Sharp edges */
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            border: 1px solid var(--gunmetal-gray);
+        }
+        .form-field {
+            margin-bottom: 25px;
+        }
+        .form-field label {
+            display: block;
+            font-family: var(--font-sub-headline);
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dusty-rose);
+            font-size: 1.1rem;
+        }
+        .form-field-description {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: var(--nude-blush);
+            margin-top: -5px; /* Adjust spacing if needed */
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .form-field input[type="text"],
+        .form-field input[type="email"],
+        .form-field textarea,
+        .form-field input[type="file"] {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--gunmetal-gray);
+            border-radius: 3px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            background-color: var(--gunmetal-gray);
+            color: var(--crisp-white);
+        }
+        .form-field input[type="file"] {
+            padding: 10px;
+            color: var(--nude-blush); /* Make file input text visible */
+        }
+        .form-field input[type="file"]::file-selector-button { /* Style file input button */
+            background-color: var(--hot-pink);
+            color: var(--crisp-white);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-family: var(--font-sub-headline);
+        }
+        .form-field textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        .form-field input:focus,
+        .form-field textarea:focus {
+            outline: none;
+            border-color: var(--hot-pink);
+            box-shadow: 0 0 8px var(--hot-pink);
+        }
+        .form-checkbox {
+            margin-top: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: flex-start; /* Align items to the start for multi-line label */
+        }
+        .form-checkbox input[type="checkbox"] {
+            margin-right: 12px;
+            margin-top: 4px; /* Align checkbox with first line of text */
+            width: 22px;
+            height: 22px;
+            accent-color: var(--hot-pink);
+            background-color: var(--gunmetal-gray); /* Ensure visibility before check */
+            border: 1px solid var(--dusty-rose);
+            appearance: none; /* Custom checkbox */
+            border-radius: 3px;
+            position: relative;
+            cursor: pointer;
+            flex-shrink: 0; /* Prevent checkbox from shrinking */
+        }
+        .form-checkbox input[type="checkbox"]:checked {
+            background-color: var(--hot-pink);
+            border-color: var(--hot-pink);
+        }
+        .form-checkbox input[type="checkbox"]:checked::before {
+            content: '✔';
+            position: absolute;
+            top: 0px;
+            left: 4px;
+            color: var(--crisp-white);
+            font-size: 16px;
+        }
+        .form-checkbox label {
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: var(--nude-blush);
+            line-height: 1.5; /* Improve readability for multi-line label */
+        }
+
+        /* --- Poll Section --- */
+        .poll-question {
+            font-family: var(--font-sub-headline);
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--crisp-white);
+        }
+        .poll-options {
+            list-style: none;
+            padding: 0;
+            max-width: 450px;
+            margin: 0 auto 25px auto;
+        }
+        .poll-options li {
+            margin-bottom: 12px;
+        }
+        .poll-options label {
+            display: block;
+            padding: 12px 15px;
+            background-color: var(--gunmetal-gray);
+            border: 1px solid var(--dusty-rose);
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            font-family: var(--font-body);
+            color: var(--crisp-white);
+        }
+        .poll-options input[type="radio"] {
+            margin-right: 10px;
+            accent-color: var(--hot-pink); /* Works in some browsers */
+        }
+        .poll-options label:hover {
+            background-color: var(--matte-black);
+            border-color: var(--hot-pink);
+        }
+        .poll-results {
+            margin-top: 25px;
+            text-align: center;
+            font-family: var(--font-accent-alt);
+            color: var(--nude-blush);
+            font-size: 1.1rem;
+        }
+
+        /* --- Interactive Fiction & Subscribe Section --- */
+        .interactive-fiction-link, .subscribe-content {
+            text-align: center;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--nude-blush);
+        }
+        .interactive-fiction-link p, .subscribe-content p {
+            margin-bottom: 1.5rem;
+        }
+
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--matte-black);
+            color: var(--nude-blush);
+            padding: 40px 0;
+            text-align: center;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            margin-top: 0; /* Remove margin if sections are seamless */
+            border-top: 2px solid var(--gunmetal-gray);
+        }
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+        .footer-links li {
+            display: inline;
+            margin: 0 18px;
+        }
+        .footer-links a {
+            color: var(--dusty-rose);
+            font-family: var(--font-sub-headline);
+            font-weight: 400;
+        }
+        .footer-links a:hover {
+            color: var(--hot-pink);
+        }
+        .footer-disclaimer {
+            font-size: 0.85rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--gunmetal-gray); /* Darker for less emphasis */
+            line-height: 1.6;
+        }
+         footer p:last-child { /* Copyright */
+            color: var(--gunmetal-gray);
+            font-size: 0.9rem;
+            margin-top: 15px;
+        }
+
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; }
+            .hero h2 { font-size: 2.2rem; }
+            .hero p.hero-intro-text { font-size: 1.2rem; }
+            .hero-header-image-placeholder { height: 150px; margin-bottom: 20px;}
+            h2 { font-size: 2.2rem; } /* Section titles */
+            .section-subtitle { font-size: 1.1rem; max-width: 95%;}
+            .zine-grid { grid-template-columns: 1fr; gap: 25px;}
+            .category-grid { grid-template-columns: 1fr; gap: 20px;}
+            .container { width: 95%; }
+            .tagline { font-size: 1.2rem; }
+            .form-container { padding: 25px; }
+        }
+
+        @media (max-width: 480px) {
+            body { font-size: 17px; }
+            h1 { font-size: 2.2rem; }
+            .hero { padding: 60px 15px; min-height: 400px; }
+            .hero-header-image-placeholder { height: 120px; margin-bottom: 15px;}
+            .button { padding: 12px 22px; font-size: 1rem; }
+            .form-container { padding: 20px; }
+            .story-card-content { padding: 15px; }
+            .story-card-content h4 { font-size: 1.1rem; }
+            .story-card-content p { font-size: 0.9rem; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Naughty Neighbors</h1>
+            <p class="tagline">Unleash your fantasies with tantalizing tales and images from the naughtiest neighbors you've never met. Dive into a world of voyeuristic pleasures and repressed desires, all from the comfort of your home.</p>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="container">
+                <div class="hero-header-image-placeholder">Header Image Placeholder</div>
+                <h2>Featured Neighbor of the Week</h2>
+                <p class="hero-intro-text">Welcome to the block, where fantasies come to life. Every neighbor has a secret. Peek into stories, snapshots, and whispers they probably didn’t mean to share.</p>
+                <a href="#this-weeks-feature" class="button">Read This Week’s Feature</a>
+            </div>
+        </section>
+
+        <!-- The Zine: Current Issue -->
+        <section class="section" id="zine">
+            <div class="container">
+                <h2 class="section-title">The Zine: Current Issue</h2>
+                <p class="section-subtitle">Curated. Steamy. Never random. This month's feature issue is filled with fresh confessions and visual treats, handpicked just for your wandering eyes.</p>
+                <div class="zine-grid">
+                    <article class="zine-item story-card">
+                        <div class="image-placeholder">Photo Thumbnail</div>
+                        <div class="story-card-content">
+                            <h4>Late Night Window</h4>
+                            <p>A glimpse of what happens when the lights go down, and the curtains are slightly ajar...</p>
+                            <a href="#" class="button">Read More</a>
+                        </div>
+                    </article>
+                    <article class="zine-item image-spotlight">
+                        <div class="polaroid">
+                            <div class="polaroid-image-area">Image Area</div>
+                            <p class="polaroid-caption">"Garden Secrets"</p>
+                        </div>
+                    </article>
+                    <article class="zine-item story-card">
+                        <div class="image-placeholder">Photo Thumbnail</div>
+                        <div class="story-card-content">
+                            <h4>The Anonymous Note</h4>
+                            <p>Found tucked in a mailbox, a confession of a long-held secret crush...</p>
+                            <a href="#" class="button">Read More</a>
+                        </div>
+                    </article>
+                    <article class="zine-item audio-clip">
+                        <h4>Audio Diary: Midnight Musings</h4>
+                        <p>&#9658; Listen Now</p>
+                    </article>
+                    <article class="zine-item story-card">
+                        <div class="image-placeholder">Photo Thumbnail</div>
+                        <div class="story-card-content">
+                            <h4>Borrowed Sugar</h4>
+                            <p>She only came over for a cup of sugar, or so she said...</p>
+                            <a href="#" class="button">Read More</a>
+                        </div>
+                    </article>
+                    <article class="zine-item image-spotlight">
+                         <div class="polaroid">
+                            <div class="polaroid-image-area">Image Area</div>
+                            <p class="polaroid-caption">"Laundry Day Dare"</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Take A Peek Navigation -->
+        <section class="section" id="take-a-peek">
+            <div class="container">
+                <h2 class="section-title">Take A Peek</h2>
+                <div class="category-grid">
+                    <div class="category-item">
+                        <h4><a href="#">Pillow Talk</a></h4>
+                        <p>Short, flirty, voyeur-style tales.</p>
+                    </div>
+                    <div class="category-item">
+                        <h4><a href="#">Caught on Cam</a></h4>
+                        <p>Stylized pictures with cheeky captions.</p>
+                    </div>
+                    <div class="category-item">
+                        <h4><a href="#">Dear Dirty Diary</a></h4>
+                        <p>Anonymous confessions of deepest desires.</p>
+                    </div>
+                    <div class="category-item">
+                        <h4><a href="#">Drunken Darings</a></h4>
+                        <p>Wild night confessions and arousing moments.</p>
+                    </div>
+                    <div class="category-item">
+                        <h4><a href="#">Bedtime Stories</a></h4>
+                        <p>Longer, detailed erotic tales.</p>
+                    </div>
+                    <div class="category-item">
+                        <h4><a href="#">Secret Snapshots</a></h4>
+                        <p>Intimate and erotic photos, amateur focus.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Confession Box -->
+        <section class="section" id="confession-box">
+            <div class="container">
+                <h2 class="section-title">Confession Box</h2>
+                <p class="section-subtitle">Share your most intimate thoughts and fantasies anonymously.</p>
+                <div class="form-container">
+                    <form id="confessionForm">
+                        <div class="form-field">
+                            <label for="confession-alias">Name or alias (optional)</label>
+                            <input type="text" id="confession-alias" name="alias">
+                        </div>
+                        <div class="form-field">
+                            <label for="confession-email">Email (for updates, optional)</label>
+                            <input type="email" id="confession-email" name="email">
+                        </div>
+                        <div class="form-field">
+                            <label for="confession-photo">Upload a reference photo (optional)</label>
+                            <input type="file" id="confession-photo" name="photo" accept="image/*">
+                            <p class="form-field-description">Or, instead of uploading, describe the main character(s) for AI generation in the story section below. You can be as short or detailed as you want, draw inspiration from sites like www.pornpen.art (for artistic styles if you wish), or create your own unique vision!</p>
+                        </div>
+                        <div class="form-field">
+                            <label for="confession-story">Your story / Character Description</label>
+                            <textarea id="confession-story" name="story" required placeholder="Share your tale or describe your characters here..."></textarea>
+                        </div>
+                        <button type="submit" class="button">Submit Your Confession</button>
+                    </form>
+                    <p id="confessionFormMessage" style="margin-top:15px; text-align:center; font-family: var(--font-accent-alt); color: var(--hot-pink);"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Poll of the Week -->
+        <section class="section" id="poll">
+            <div class="container">
+                <h2 class="section-title">Poll of the Week</h2>
+                <p class="section-subtitle">Vote on this week's poll and see the results in real-time (results are simulated).</p>
+                <form id="pollForm" class="form-container">
+                    <h3 class="poll-question">What's your favorite type of neighborhood fantasy?</h3>
+                    <ul class="poll-options">
+                        <li><label><input type="radio" name="pollOption" value="1"> The mysterious newcomer</label></li>
+                        <li><label><input type="radio" name="pollOption" value="2"> The couple next door</label></li>
+                        <li><label><input type="radio" name="pollOption" value="3"> An accidental encounter</label></li>
+                        <li><label><input type="radio" name="pollOption" value="4"> Secret admirer revelations</label></li>
+                    </ul>
+                    <button type="submit" class="button">Vote</button>
+                    <div class="poll-results" id="pollResults"></div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Interactive Fiction -->
+        <section class="section" id="interactive-fiction">
+            <div class="container">
+                <h2 class="section-title">Interactive Fiction</h2>
+                <p class="section-subtitle">Dive into choose-your-own-adventure style stories where your choices shape the outcome.</p>
+                <div class="interactive-fiction-link">
+                    <p>Explore: <a href="#" class="button">Your Choice, Your Story: The Masquerade</a></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Submit Your Secret -->
+        <section class="section" id="submit-secret">
+            <div class="container">
+                <h2 class="section-title">Submit Your Secret</h2>
+                <p class="section-subtitle">We’re collecting confessions, fantasies, and flirtatious snapshots from real neighbors like you. Stay anonymous or claim your fame.</p>
+                <div class="form-container">
+                    <form id="secretForm">
+                        <div class="form-field">
+                            <label for="secret-alias">Name or alias (optional)</label>
+                            <input type="text" id="secret-alias" name="alias">
+                        </div>
+                        <div class="form-field">
+                            <label for="secret-email">Email (for updates, optional)</label>
+                            <input type="email" id="secret-email" name="email">
+                        </div>
+                        <div class="form-field">
+                            <label for="secret-photo">Upload a photo (optional, for AI reference)</label>
+                            <input type="file" id="secret-photo" name="photo" accept="image/*">
+                             <p class="form-field-description">Or, instead of uploading, describe the main character(s) for AI generation in the story section below. You can be as short or detailed as you want, draw inspiration from sites like www.pornpen.art (for artistic styles if you wish), or create your own unique vision!</p>
+                        </div>
+                        <div class="form-field">
+                            <label for="secret-story">Your story / Character Description (for AI reference)</label>
+                            <textarea id="secret-story" name="story" required placeholder="Share your tale or describe your characters for AI generation..."></textarea>
+                        </div>
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="secret-agree" name="agree" required>
+                            <label for="secret-agree">I agree that this is a tasteful submission. AI will use this as a reference to generate similar content.</label>
+                        </div>
+                        <button type="submit" class="button">Submit Your Secret</button>
+                    </form>
+                     <p id="secretFormMessage" style="margin-top:15px; text-align:center; font-family: var(--font-accent-alt); color: var(--hot-pink);"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subscribe Section -->
+        <section class="section" id="subscribe">
+            <div class="container">
+                <h2 class="section-title">Subscribe</h2>
+                <p class="section-subtitle">Don’t Miss a Thing</p>
+                <div class="subscribe-content">
+                    <p>We send out a love letter every month with featured neighbors, steamy gossip, and behind-the-curtain exclusives.</p>
+                    <a href="#" class="button">Join The Neighborhood Watch</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <ul class="footer-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Submission Guidelines</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <p class="footer-disclaimer">Naughty Neighbors is a creative erotic project meant for mature audiences. User-submitted content is used as a reference for AI generation and is kept anonymous. All other content is curated and may not be AI-generated.</p>
+            <p>&copy; 2025 Naughty Neighbors. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Confession Form Submission
+        const confessionForm = document.getElementById('confessionForm');
+        const confessionFormMessage = document.getElementById('confessionFormMessage');
+        if (confessionForm) {
+            confessionForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const story = document.getElementById('confession-story').value;
+                if (story.trim() === '') {
+                    confessionFormMessage.textContent = 'Please share your story or character description before submitting.';
+                    confessionFormMessage.style.color = 'var(--hot-pink)';
+                } else {
+                    confessionFormMessage.textContent = 'Thank you! Your confession has been submitted (not really, this is a demo).';
+                    confessionFormMessage.style.color = 'var(--dusty-rose)';
+                    confessionForm.reset();
+                }
+            });
+        }
+
+        // Secret Form Submission
+        const secretForm = document.getElementById('secretForm');
+        const secretFormMessage = document.getElementById('secretFormMessage');
+        if (secretForm) {
+            secretForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const story = document.getElementById('secret-story').value;
+                const agree = document.getElementById('secret-agree').checked;
+                if (story.trim() === '') {
+                    secretFormMessage.textContent = 'Please share your secret or character description before submitting.';
+                    secretFormMessage.style.color = 'var(--hot-pink)';
+                } else if (!agree) {
+                    secretFormMessage.textContent = 'Please agree to the submission terms.';
+                    secretFormMessage.style.color = 'var(--hot-pink)';
+                }
+                else {
+                    secretFormMessage.textContent = 'Thank you! Your secret has been submitted (not really, this is a demo).';
+                    secretFormMessage.style.color = 'var(--dusty-rose)';
+                    secretForm.reset();
+                }
+            });
+        }
+
+        // Poll Form Submission
+        const pollForm = document.getElementById('pollForm');
+        const pollResults = document.getElementById('pollResults');
+        if (pollForm) {
+            pollForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const selectedOption = pollForm.querySelector('input[name="pollOption"]:checked');
+                if (selectedOption) { // Corrected variable name here
+                    pollResults.innerHTML = `Thank you for voting! <br>Current simulated results: <br>
+                    Mysterious Newcomer: ${Math.floor(Math.random() * 30) + 20}% <br>
+                    Couple Next Door: ${Math.floor(Math.random() * 25) + 15}% <br>
+                    Accidental Encounter: ${Math.floor(Math.random() * 20) + 10}% <br>
+                    Secret Admirer: ${Math.floor(Math.random() * 25) + 10}%`;
+                    pollResults.style.color = 'var(--nude-blush)';
+                } else {
+                    pollResults.textContent = 'Please select an option to vote.';
+                    pollResults.style.color = 'var(--hot-pink)';
+                }
+            });
+        }
+
+    </script>
+
+</body>
+</html>
